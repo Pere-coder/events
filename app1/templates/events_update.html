@@ -1,0 +1,14 @@
+<!-- events_update.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Update Event</h2>
+
+    <form method="post" class="mt-3">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Update Event</button>
+    </form>
+</div>
+{% endblock %}

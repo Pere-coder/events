@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4">Events List</h2>
+    <div class="table-responsive"> <!-- Add this wrapper for responsiveness -->
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Description</th>
+                    <th>Link</th>
+                    <th>Date</th>
+                    <th>Actions</th> <!-- Add actions column header -->
+                </tr>
+            </thead>
+            <tbody>
+                {% for event in events %}
+                    <tr>
+                        <td>{{ event.pk }}</td> <!-- Corrected to show ID -->
+                        <td>{{ event.description }}</td>
+                        <td><a href="{{ event.link }}">{{ event.link }}</a></td>
+                        <td>{{ event.date }}</td>
+                        <td>
+                            <a href="{% url 'events-update' event.pk %}" class="btn btn-warning btn-sm">Edit</a>
+                            <a href="{% url 'events-delete' event.pk %}" class="btn btn-danger btn-sm">Delete</a>
+                        </td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="5">No events found.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div> <!-- Close the responsive wrapper -->
+</div>
+{% endblock %}

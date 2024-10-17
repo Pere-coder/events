@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% load form_tags %}
+{% block content %}
+<div class="container mt-5">
+    <h2>Event Detail</h2>
+
+    <div class="card mb-3">
+        <div class="card-header">
+            Event Information
+        </div>
+        <div class="card-body">
+            <p class="card-text">Date: {{ event.date }}</p>
+            <p class="card-text">Description: {{ event.description }}</p>
+            <p class="card-text">Link: <a href="{{ event.link }}">{{ event.link }}</a></p>
+        </div>
+    </div>
+
+    <!-- Update form -->
+    <h3>Update Event</h3>
+    <form method="post" class="mt-3">
+        {% csrf_token %}
+        
+        <!-- Display non-field errors if any -->
+        {{ form.non_field_errors }}
+
+        <div class="mb-3">
+            {{ form.description.label }}  
+            {{ form.description|add_class:"form-control" }}  
+            {{ form.description.errors }}
+        </div>
+
+        <div class="mb-3">
+            {{ form.link.label }}  
+            {{ form.link|add_class:"form-control" }}  
+            {{ form.link.errors }}
+        </div>
+
+        <div class="mb-3">
+            {{ form.date.label }}  
+            {{ form.date|add_class:"form-control datepicker" }}  
+            {{ form.date.errors }}
+        </div>
+
+        <button type="submit" class="btn btn-primary">Update Event</button>
+    </form>
+
+    <!-- Delete button -->
+    <form method="post" action="{% url 'events-details' event.id %}" class="mt-3">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Delete Event</button>
+    </form>
+
+    <a href="{% url 'events-list' %}" class="btn btn-secondary mt-3">Back to Events</a>
+
+    <script>
+        $(document).ready(function() {
+            $('.datepicker').datepicker({
+                format: 'yyyy-mm-dd', // Adjust format as needed
+                autoclose: true
+            });
+        });
+    </script>
+</div>
+{% endblock %}

@@ -17,7 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from rest_framework.routers import DefaultRouter
 from django.urls import path, include
-from app1.views import EventsListCreateAPIView, EventsDetailAPIView, EventsList, EventsCreate,EventsDetailView, EventsDeleteView, EventsUpdateView,CustomLoginView
+from app1.views import EventsListCreateAPIView, EventsDetailAPIView, EventsList, EventsCreate,EventsDetailView, EventsDeleteView, EventsUpdateView,CustomLoginView, GistListCreateAPIView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -29,4 +29,5 @@ urlpatterns = [
     path('events_update/<int:pk>/', EventsUpdateView.as_view(), name='events-update'),
     path('events_delete/<int:pk>/', EventsDeleteView.as_view(), name='events-delete'),
     path('login/', CustomLoginView.as_view(), name='login'),
+    path('gist/', GistListCreateAPIView.as_view(), name='gist'),   
 ]

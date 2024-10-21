@@ -1,7 +1,7 @@
 from django.shortcuts import render
-from .models import Events
-from .serializers import EventsSerializer
-from rest_framework.generics import ListAPIView, RetrieveAPIView
+from .models import Events, Gist
+from .serializers import EventsSerializer, GistSerializer
+from rest_framework.generics import ListAPIView, RetrieveAPIView, CreateAPIView
 from django.views.generic import DetailView, ListView, UpdateView, DeleteView, CreateView
 from django.utils import timezone
 from.forms import EventsForm
@@ -9,6 +9,15 @@ from django.urls import reverse_lazy
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.mixins import LoginRequiredMixin
 # Create your views here.
+
+
+class GistListCreateAPIView(ListAPIView, CreateAPIView):
+    serializer_class = GistSerializer
+
+    def get_queryset(self):
+        now = timezone.now()
+        return Gist.objects.filter(created_at__gte=now).order_by('-created_at')
+
 
 class EventsListCreateAPIView(ListAPIView):
     serializer_class = EventsSerializer

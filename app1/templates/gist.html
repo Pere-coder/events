@@ -1,0 +1,36 @@
+{% extends 'base.html'%}
+{% block content%}
+<div class="container mt-5">
+    <h2 class="mb-4">Gist List</h2>
+    <div class="table-responsive"> <!-- Add this wrapper for responsiveness -->
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Opinions</th>
+                    <th>Department</th>
+                    <th>Date</th>
+                    <th>Actions</th> <!-- Add actions column header -->
+                </tr>
+            </thead>
+            <tbody>
+                {% for gist in gists %}
+                    <tr>
+                        <td>{{ gist.pk }}</td> <!-- Corrected to show ID -->
+                        <td>{{ gist.opinion }}</td>
+                        <td>{{ gist.department }}</td>
+                        <td>{{ gist.created_at }}</td>
+                        <td>
+                            <a href="{% url 'gist-delete' gist.pk %}" class="btn btn-danger btn-sm">Delete</a>
+                        </td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="5">No gists found.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div> <!-- Close the responsive wrapper -->
+</div>
+{% endblock %}

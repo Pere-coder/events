@@ -19,6 +19,23 @@ class GistListCreateAPIView(ListAPIView, CreateAPIView):
         return Gist.objects.filter(created_at__gte=now).order_by('-created_at')
 
 
+class GistList(LoginRequiredMixin,ListView):
+    model = Gist
+    template_name = 'gist.html'
+    context_object_name = 'gists'
+    login_url = reverse_lazy('login')
+    redirect_field_name = 'next'
+
+class GistDelete(LoginRequiredMixin, DeleteView):
+    model = Gist
+    template_name = 'gist_confirm_delete.html'  # Create this template
+    context_object_name = 'gists'
+    success_url = reverse_lazy('gist-list')
+    login_url = reverse_lazy('login')
+    redirect_field_name = 'next'
+
+
+
 class EventsListCreateAPIView(ListAPIView):
     serializer_class = EventsSerializer
 
